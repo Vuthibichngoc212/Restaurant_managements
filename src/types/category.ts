@@ -1,13 +1,10 @@
 export interface ICategoryItem {
-  id: number;
-  categoryName: string;
+	id: number;
+	name: string;
 }
 
 export interface ICategoryResponse {
-  status: string;
-  message: string;
-  data: {
-    totalPages: number;
-    categories: ICategoryItem[];
-  };
+	status: string;
+	message: string;
+	data: ICategoryItem[];
 }

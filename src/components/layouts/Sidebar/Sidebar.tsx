@@ -158,14 +158,13 @@ const SideBar = () => {
 						}}
 					/>
 				</Box>
-
+				<Divider />
 				<List>
 					{filterSidebarRoutes(sidebar)
 						.filter((value: any) => value?.children)
 						?.map((primaryLevelItem: any) => {
 							return (
 								<Box key={primaryLevelItem.label}>
-									{primaryLevelItem.name === 'System Setting' && <Divider sx={{ m: '1.6rem 0' }} />}
 									{primaryLevelItem.children && primaryLevelItem.children.length > 0 ? (
 										<Accordion
 											expanded={expanded[primaryLevelItem.label]}

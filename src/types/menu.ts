@@ -1,16 +1,14 @@
 export interface IMenuItem {
-	id: number;
-	itemName: string;
+	id?: number;
+	name: string;
 	price: number;
-	image: string;
-	category: string;
+	image_url: string;
+	categories_id: number | null;
+	discription: string;
 }
 
 export interface IMenuResponse {
 	status: string;
 	message: string;
-	data: {
-		totalPages: number;
-		menuItemResponseList: IMenuItem[];
-	};
+	data: IMenuItem[];
 }

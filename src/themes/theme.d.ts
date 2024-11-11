@@ -179,6 +179,8 @@ declare module '@mui/material/styles' {
 		peachyOrange?: string;
 		orangeSalmon?: string;
 		orangeTangerine?: string;
+		espressoBrown?: string;
+		freshMint?: string;
 		burntOrange?: string;
 		rustRed?: string;
 		deepRed?: string;
@@ -249,6 +251,8 @@ declare module '@mui/material/styles' {
 		peachyOrange?: string;
 		orangeSalmon?: string;
 		orangeTangerine?: string;
+		espressoBrown?: string;
+		freshMint?: string;
 		burntOrange?: string;
 		rustRed?: string;
 		deepRed?: string;
@@ -593,6 +597,8 @@ let theme = createTheme({
 			peachyOrange: '#F9AF78',
 			orangeSalmon: '#F58342',
 			orangeTangerine: '#F26522',
+			espressoBrown: '#4B2C20',
+			freshMint: '#4E8D7C',
 			burntOrange: '#E34813',
 			rustRed: '#BC3412',
 			deepRed: '#962B16',
@@ -699,14 +705,14 @@ theme = createTheme(theme, {
 	}
 });
 const submitButtonStyle = {
-	backgroundColor: theme.palette.primary.orangeTangerine,
+	backgroundColor: theme.palette.primary.espressoBrown,
 	color: theme.palette.neutral.main,
 	boxShadow: 'none',
 	padding: '1.2rem 2.4rem',
 	height: '4.2rem',
 	borderRadius: '8px',
 	'&:hover': {
-		backgroundColor: theme.palette.primary.orangeTangerine,
+		backgroundColor: theme.palette.primary.espressoBrown,
 		boxShadow: 'none'
 	},
 	'&:focus': {
@@ -733,12 +739,12 @@ const textButtonStyle = {
 
 const washedButtonStyle = {
 	backgroundColor: theme.palette.base.main,
-	border: '1px solid rgba(242, 101, 34, 1)',
-	color: 'rgba(242, 101, 34, 1)',
+	border: '1px solid #4B2C20',
+	color: theme.palette.primary.espressoBrown,
 	height: '4.2rem',
 	'&:hover': {
-		color: 'rgba(242, 101, 34, 1)',
-		border: '1px solid rgba(242, 101, 34, 1)',
+		color: theme.palette.primary.espressoBrown,
+		border: '1px solid #4B2C20',
 		backgroundColor: theme.palette.base.main,
 		boxShadow: 'none'
 	}
@@ -803,10 +809,6 @@ theme = createTheme(theme, {
 					props: { variant: 'outlined', color: 'info' },
 					style: {
 						...washedButtonStyle
-						// color: '#001233',
-						// '&:hover': {
-						// 	borderColor: 'rgba(0, 18, 51, 0.8)'
-						// }
 					}
 				}
 			]

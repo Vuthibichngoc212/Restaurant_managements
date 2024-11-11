@@ -1,14 +1,15 @@
 export interface ITableItem {
-  stt: number;
-  id: number;
-  status: string;
+	id: number;
+	status: string;
+}
+
+export interface IPaging {
+	page: number;
+	limit: number;
+	total: number;
 }
 
 export interface ITableResponse {
-  status: string;
-  message: string;
-  data: {
-    totalPages: number;
-    tableItemResponseList: ITableItem[];
-  };
+	data: ITableItem[];
+	paging: IPaging;
 }

@@ -19,7 +19,7 @@ const Breadcrumb = () => {
 		<Box>
 			<Breadcrumbs>
 				{pathSegments.length === 0 ? (
-					<Typography variant="subbody1_medium" color="primary.main">
+					<Typography variant="subbody1_medium" color="#4B2C20">
 						{BREADCRUMB.DASHBOARD.INDEX}
 					</Typography>
 				) : (
@@ -29,7 +29,7 @@ const Breadcrumb = () => {
 						const isLast = index === pathSegments.length - 1;
 
 						return isLast ? (
-							<Typography key={index} variant="subbody1_medium" color="primary.main">
+							<Typography key={index} variant="subbody1_medium" color="#4B2C20">
 								{breadcrumbLabel}
 							</Typography>
 						) : (

@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import CommonPagination from '@/components/common/CommonPagination/Pagination';
-import useLayoutStore from '@/stores/layout';
+// import CommonPagination from '@/components/common/CommonPagination/Pagination';
+// import useLayoutStore from '@/stores/layout';
 import theme from '@/themes/theme.d';
 import { Box, Typography } from '@mui/material';
 
 const Footer = ({ isOpenSidebar }: any) => {
-	const { page, pageSize, total, showPagination } = useLayoutStore();
+	// const { page, pageSize, total, showPagination } = useLayoutStore();
 	return (
 		<Box
 			display={'flex'}
@@ -27,7 +27,7 @@ const Footer = ({ isOpenSidebar }: any) => {
 				Copyright © 2024 Phenikaa University. All rights reserved. Interdisciplinary Project -
 				Group 2, developed by 2 members
 			</Typography>
-			{showPagination && <CommonPagination page={page} pageSize={pageSize} total={total} />}
+			{/* {showPagination && <CommonPagination page={page} pageSize={pageSize} total={total} />} */}
 		</Box>
 	);
 };

@@ -8,7 +8,7 @@ import Box from '@mui/material/Box';
 import Menu from '@mui/material/Menu';
 import Avatar from '@mui/material/Avatar';
 import { ListItemIcon, MenuItem, Stack } from '@mui/material';
-import Img from '@/assets/images/Rectangle77.png';
+import Img from '@/assets/images/avt.png';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';

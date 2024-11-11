@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
 	Box,
-	Button,
 	Skeleton,
 	Table,
 	TableBody,
@@ -11,11 +10,9 @@ import {
 	TableRow,
 	Typography
 } from '@mui/material';
-import { useMemo, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import theme from '@/themes/theme.d';
 import noData from '@/assets/images/noData.svg';
-import AddIcon from '@mui/icons-material/Add';
 
 interface DataTableProps {
 	columns?: any;
@@ -23,7 +20,6 @@ interface DataTableProps {
 	options?: any;
 	customTableStyles?: any;
 	isLoading?: boolean;
-	isCheckDetail?: any;
 	total?: number;
 }
 
@@ -36,23 +32,6 @@ const TableCommon: React.FC<DataTableProps> = ({
 }) => {
 	const [show, setShow] = useState(false);
 	const [render, setRender] = useState(false);
-	const location = useLocation();
-	const navigate = useNavigate();
-
-	const [editRecord, setEditRecord] = useState<any>(null);
-	const [isOpenImpactFormModal, setIsOpenImpactFormModal] = useState(false);
-
-	const ImpactFormModal = useMemo(() => {
-		if (options && options.modals && options.modals.impactFormModal) {
-			return options!.modals!.impactFormModal.formModalComponent;
-		}
-		return null;
-	}, [options]);
-
-	const handleOpenModal = (record: any = null) => {
-		setEditRecord(record);
-		setIsOpenImpactFormModal(true);
-	};
 
 	return (
 		<Box
@@ -65,31 +44,6 @@ const TableCommon: React.FC<DataTableProps> = ({
 				}
 			}}
 		>
-			{/* FEATURE */}
-			<Box
-				sx={{
-					mb: '1.6rem',
-					display: 'flex',
-					alignItems: 'center',
-					justifyContent: 'flex-end'
-				}}
-			>
-				{options && options.addButton && options.addButton.isShow && (
-					<Button
-						variant="contained"
-						startIcon={<AddIcon />}
-						size="medium"
-						sx={{ marginLeft: '24px' }}
-						// onClick={() => {
-						// 	setIsOpenImpactFormModal(true);
-						// }}
-						onClick={() => handleOpenModal()}
-					>
-						{options.addButton.title}
-					</Button>
-				)}
-			</Box>
-
 			{/* TABLE */}
 			<TableContainer
 				sx={{
@@ -181,7 +135,7 @@ const TableCommon: React.FC<DataTableProps> = ({
 										</TableCell>
 									);
 								})}
-							{options && options.checkList && options.checkList.isShow && (
+							{/* {options && options.checkList && options.checkList.isShow && (
 								<TableCell
 									sx={{
 										'&.MuiTableCell-root': {
@@ -193,7 +147,7 @@ const TableCommon: React.FC<DataTableProps> = ({
 								>
 									<Typography variant="body2_semibold">Chọn</Typography>
 								</TableCell>
-							)}
+							)} */}
 						</TableRow>
 					</TableHead>
 					<TableBody>
@@ -339,45 +293,6 @@ const TableCommon: React.FC<DataTableProps> = ({
 					</TableBody>
 				</Table>
 			</TableContainer>
-
-			{/* {ImpactFormModal && (
-				<ImpactFormModal
-					isOpenModal={isOpenImpactFormModal}
-					setIsOpenModal={setIsOpenImpactFormModal}
-					headerTitle={
-						editRecord
-							? options?.modals.impactFormModal.editTitle
-							: options?.modals.impactFormModal.addTitle
-					}
-					cancelButtonLabel={options?.modals.impactFormModal.cancelButtonLabel}
-					submitButtonLabel={
-						editRecord
-							? options?.modals.impactFormModal.EditButtonLabel
-							: options?.modals.impactFormModal.AddButtonLabel
-					}
-					editRole={editRecord}
-					setEditRole={setEditRecord}
-				/>
-			)} */}
-			{ImpactFormModal && (
-				<ImpactFormModal
-					isOpenModal={isOpenImpactFormModal}
-					setIsOpenModal={setIsOpenImpactFormModal}
-					headerTitle={
-						editRecord
-							? options?.modals?.impactFormModal?.editTitle
-							: options?.modals?.impactFormModal?.addTitle
-					}
-					cancelButtonLabel={options?.modals?.impactFormModal?.cancelButtonLabel}
-					submitButtonLabel={
-						editRecord
-							? options?.modals?.impactFormModal?.EditButtonLabel
-							: options?.modals?.impactFormModal?.AddButtonLabel
-					}
-					editRole={editRecord} // Pass data for editing
-					setEditRole={setEditRecord}
-				/>
-			)}
 		</Box>
 	);
 };

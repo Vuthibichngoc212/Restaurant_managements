@@ -2,26 +2,80 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import TableCommon from '@/components/common/CommonTable/CommonTable';
 import theme from '@/themes/theme.d';
-import { Box, IconButton, Tooltip } from '@mui/material';
+import { Box, Button, CircularProgress, IconButton, Tooltip, Typography } from '@mui/material';
 import FormModal from '../components/FormModal/FormModal';
 import HeaderTitle from '@/components/common/HeaderTitle/HeaderTitle';
-import Edit from '@/assets/icons/edit-table.svg?react';
 import Trash from '@/assets/icons/trash-table.svg?react';
 import { commonStyles } from '@/styles/common.styles';
+import { useGetTableQuery, useDeleteTableMutation } from '@/redux/api/api.caller';
+import Add from '@mui/icons-material/Add';
+import { useState } from 'react';
+import DeletePopUp from '@/components/common/DeletePopUp/DeletePopUp';
+import { toast } from 'react-toastify';
 
 const Table = () => {
+	const [isOpenModal, setIsOpenModal] = useState(false);
+	const [isEdit, setIsEdit] = useState<any>(null);
+	const [deleteModal, setDeleteModal] = useState(false);
+
+	const [deleteTable] = useDeleteTableMutation();
+	const { data: tables, refetch, isLoading } = useGetTableQuery();
+	const tableData = tables?.data?.map((table, index) => ({
+		...table,
+		stt: index + 1
+	}));
+
+	const handleClickAdd = () => {
+		setIsOpenModal(true);
+		setIsEdit(null);
+	};
+
+	const handleDeleteModal = (item: any) => {
+		setIsEdit(item);
+		setDeleteModal(true);
+	};
+	const closeDeleteModal = () => {
+		setDeleteModal(false);
+	};
+
+	const handleDeleteConfirm = async () => {
+		if (!isEdit) return;
+
+		try {
+			const deletedAt = new Date().toISOString();
+			await deleteTable({ tablesId: isEdit.id, deleted_at: deletedAt }).unwrap();
+			toast.success('Xóa bàn thành công', {
+				position: 'bottom-right',
+				autoClose: 1000,
+				theme: 'colored'
+			});
+			refetch();
+			closeDeleteModal();
+		} catch (error) {
+			toast.error('Xóa bàn thất bại', {
+				theme: 'colored',
+				autoClose: 1000,
+				position: 'bottom-right'
+			});
+		}
+	};
+
 	const operationColumns = [
 		{
 			name: 'stt',
 			title: 'STT',
 			align: 'center',
-			width: 50,
-			render: (_row: any, _column: any) => {
-				return mockData.findIndex((data) => data.id === _row.id) + 1;
+			width: 50
+		},
+		{
+			name: 'id',
+			title: 'Số bàn',
+			align: 'left',
+			width: 100,
+			render: (row: any) => {
+				return <Typography variant="body2_regular">Bàn số {row.id}</Typography>;
 			}
 		},
-		{ name: 'id', title: 'Mã bàn', align: 'left', width: 130 },
-		{ name: 'status', title: 'Trạng thái', align: 'left', width: 100 },
 		{
 			name: 'action',
 			title: 'Thao tác',
@@ -44,7 +98,7 @@ const Table = () => {
 						}}
 					>
 						<Tooltip
-							title="Chỉnh sửa bàn"
+							title="Xoá bàn"
 							arrow
 							slotProps={{
 								popper: {
@@ -59,135 +113,89 @@ const Table = () => {
 								}
 							}}
 						>
-							<IconButton
-								sx={commonStyles.iconButton()}
-								// onClick={() => {
-								// 	setIsOpenAccountModal(true);
-								// }}
-							>
-								<Edit />
+							<IconButton sx={commonStyles.iconButton()} onClick={() => handleDeleteModal(row)}>
+								<Trash />
 							</IconButton>
 						</Tooltip>
-
-						{!row.is_current_user && (
-							<Tooltip
-								title="Xoá bàn"
-								arrow
-								slotProps={{
-									popper: {
-										modifiers: [
-											{
-												name: 'offset',
-												options: {
-													offset: [0, -7]
-												}
-											}
-										]
-									}
-								}}
-							>
-								<IconButton
-									sx={commonStyles.iconButton()}
-									onClick={() => {
-										// setIsOpenDeleteModal(true);
-									}}
-								>
-									<Trash />
-								</IconButton>
-							</Tooltip>
-						)}
 					</Box>
 				);
 			}
 		}
 	];
 
-	const mockData = [
-		{
-			id: 'OD001',
-			status: 'Đang xử lý'
-		},
-		{
-			id: 'OD002',
-			status: 'Hoàn thành'
-		},
-		{
-			id: 'OD003',
-			status: 'Đã hủy'
-		},
-		{
-			id: 'OD004',
-			status: 'Đang xử lý'
-		},
-		{
-			id: 'OD005',
-			status: 'Hoàn thành'
-		},
-		{
-			id: 'OD006',
-			status: 'Đang xử lý'
-		},
-		{
-			id: 'OD007',
-			status: 'Đã hủy'
-		},
-		{
-			id: 'OD008',
-			status: 'Hoàn thành'
-		},
-		{
-			id: 'OD009',
-			status: 'Đang xử lý'
-		},
-		{
-			id: 'OD010',
-			status: 'Hoàn thành'
-		}
-	];
-
 	return (
 		<Box>
 			<HeaderTitle title="Quản lý bàn" customStyles={{ marginBottom: '24px' }} />
-			<Box
-				sx={{
-					height: '70vh',
-					position: 'relative',
-					background: theme.palette.background.paper,
-					borderRadius: '8px',
-					boxShadow: ' 0px 1px 5px 0px #0000000D',
-					padding: '2.4rem'
-				}}
-			>
-				<TableCommon
-					data={mockData}
-					columns={operationColumns}
-					customTableStyles={{
-						height: '90%'
+			{isLoading ? (
+				<Box
+					sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '66vh' }}
+				>
+					<CircularProgress />
+				</Box>
+			) : (
+				<Box
+					sx={{
+						height: '70vh',
+						position: 'relative',
+						background: theme.palette.background.paper,
+						borderRadius: '8px',
+						boxShadow: ' 0px 1px 5px 0px #0000000D',
+						padding: '2.4rem'
 					}}
-					isCheckDetail={{
-						isClick: false
-					}}
-					options={{
-						addButton: {
-							isShow: true,
-							title: 'Thêm bàn'
-						},
-						modals: {
-							impactFormModal: {
-								isShow: true,
-								formModalComponent: (props: any) => {
-									return <FormModal {...props} />;
-								},
-								addTitle: 'Thêm bàn',
-								editTitle: 'Chỉnh sửa bàn',
-								cancelButtonLabel: 'Huỷ bỏ',
-								EditButtonLabel: 'Cập nhật',
-								AddButtonLabel: 'Lưu'
-							}
+				>
+					<Box
+						sx={{
+							position: 'relative',
+							display: 'flex',
+							justifyContent: 'flex-end',
+							mb: '1.6rem'
+						}}
+					>
+						<Button
+							variant="contained"
+							size="medium"
+							sx={{
+								'&.MuiButtonBase-root.MuiButton-root': { height: '4.6rem' }
+							}}
+							startIcon={<Add />}
+							onClick={handleClickAdd}
+						>
+							Thêm bàn
+						</Button>
+					</Box>
+					<TableCommon
+						data={tableData || []}
+						columns={operationColumns}
+						customTableStyles={{
+							height: '90%'
+						}}
+					/>
+
+					<FormModal
+						isOpenModal={isOpenModal}
+						setIsOpenModal={setIsOpenModal}
+						headerTitle="Thêm số lượng bàn"
+						cancelButtonLabel="Huỷ bỏ"
+						submitButtonLabel="Lưu"
+					/>
+
+					<DeletePopUp
+						onConfirm={handleDeleteConfirm}
+						open={deleteModal}
+						onClose={closeDeleteModal}
+						title={'Xoá thực đơn'}
+						content={
+							<Typography sx={{ color: theme.palette.neutral.black, fontSize: '1.6rem' }}>
+								Bạn có chắc chắn muốn xoá bàn {''}
+								<Typography variant="body1_regular" component="span" sx={{ color: '#000' }}>
+									{isEdit?.íd} {''}
+								</Typography>
+								không?
+							</Typography>
 						}
-					}}
-				/>
-			</Box>
+					/>
+				</Box>
+			)}
 		</Box>
 	);
 };

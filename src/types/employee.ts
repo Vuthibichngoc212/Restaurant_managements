@@ -1,20 +1,21 @@
 export interface IEmployee {
 	id: number;
-	username: string;
+	name: string;
 	password: string;
-	retypePassword?: string;
-	fullname: string;
 	email: string;
-	phoneNumber: string;
-	address: string;
-	role?: number;
+	role_type?: number;
+	created_at?: string;
+	updated_at?: string | null;
+	deleted_at?: string | null;
+}
+
+export interface IPaging {
+	page: number;
+	limit: number;
+	total: number;
 }
 
 export interface IEmployeeResponse {
-	status: string;
-	message: string;
-	data: {
-		totalPages: number;
-		userResponses: IEmployee[];
-	};
+	data: IEmployee[];
+	paging: IPaging;
 }

@@ -5,6 +5,7 @@ import { Button, Divider } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useStyles } from './CRUDModal.styles';
 import HeaderTitle from '../HeaderTitle/HeaderTitle';
+import theme from '@/themes/theme.d';
 interface ModalProps {
 	isOpenModal: boolean;
 	setIsOpenModal: any;
@@ -35,7 +36,8 @@ const CRUDModal = ({
 					<HeaderTitle
 						title={headerTitle}
 						customStyles={{
-							'& .MuiTypography-root': { color: '#000' },
+							// '& .MuiTypography-root': { color: '#000' },
+							'& .MuiTypography-root': { color: theme.palette.primary.freshMint },
 							textAlign: 'center',
 							marginBottom: '1.6rem',
 							gridColumn: '2/3'

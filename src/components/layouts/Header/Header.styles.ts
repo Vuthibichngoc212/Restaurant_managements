@@ -30,7 +30,7 @@ const useStyles = makeStyles({
 		'&.MuiTypography-root': {
 			fontSize: 24,
 			lineHeight: '2.8rem',
-			color: '#f26526'
+			color: theme.palette.primary.freshMint
 		}
 	},
 	menuItemText: {

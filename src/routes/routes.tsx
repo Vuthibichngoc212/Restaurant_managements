@@ -1,10 +1,10 @@
 // import PageOnDevelopment from '@/components/common/PageOnDevelopment';
 import ProtectedLayout from '@/components/layouts/ProtectedLayout/ProtectedLayout';
 import { ROUTE_PATH } from '@/constants/routePath.constant';
+import Dashboard from '@/pages/dashboard/screens';
 import Employees from '@/pages/employee/screens';
-import { Home } from '@/pages/Home';
 import Menu from '@/pages/menu/screens';
-import SignIn from '@/pages/SignIn/screens';
+import SignIn from '@/pages/signIn/screens';
 import Table from '@/pages/table/screens';
 import { RouteObject } from 'react-router-dom';
 
@@ -14,13 +14,12 @@ const routes: RouteObject[] = [
 		element: <SignIn />
 	},
 	{
-		// path: ROUTE_PATH.ROOT.INDEX,
 		path: ROUTE_PATH.ADMIN.DASHBOARD,
 		element: <ProtectedLayout />,
 		children: [
 			{
 				path: ROUTE_PATH.ADMIN.DASHBOARD,
-				element: <Home />
+				element: <Dashboard />
 			}
 		]
 	},

@@ -18,15 +18,9 @@ export const apiCaller = createApi({
 				url: '/users/auth',
 				method: 'POST',
 				body: users,
-				// mode: "no-cors",
 				headers: {
 					'Content-Type': 'application/json'
 				}
-				// headers: REQUEST_HEADERS.jsonHeader(),
-				// headers: {
-				//   "ngrok-skip-browser-warning": "any_value",
-				//   "User-Agent": "CustomUserAgentString",
-				// },
 			})
 		}),
 		getUsers: builder.query<IEmployeeResponse, void>({
@@ -45,7 +39,7 @@ export const apiCaller = createApi({
 		updateUsers: builder.mutation({
 			query: ({ userId, ...users }) => ({
 				url: `/users/${userId}`,
-				method: 'PUT',
+				method: 'PATCH',
 				body: users
 			})
 		}),
@@ -55,13 +49,7 @@ export const apiCaller = createApi({
 				method: 'DELETE'
 			})
 		}),
-		//
-		settingUser: builder.query<IUserResponse, void>({
-			query: () => ({
-				url: `/web-settings`,
-				method: 'GET'
-			})
-		}),
+		//menu
 		getMenu: builder.query<IMenuResponse, void>({
 			query: () => ({
 				url: `/menus`,
@@ -81,17 +69,17 @@ export const apiCaller = createApi({
 				method: 'PATCH'
 			})
 		}),
-		//
-		updateMenu: builder.mutation<any, any>({
-			query: (body) => ({
-				url: `menu/updateItem/${body.id}`,
-				method: 'PUT',
-				body
+		updateMenu: builder.mutation({
+			query: ({ id, ...payload }) => ({
+				url: `/menus/${id}`,
+				method: 'PATCH',
+				body: payload
 			})
 		}),
-		filterMenu: builder.query<IMenuResponse, { category: string }>({
-			query: ({ category }) => ({
-				url: `/menu/${category}?page=0&limit=100`,
+		//
+		getCategory: builder.query<ICategoryResponse, void>({
+			query: () => ({
+				url: `/categories`,
 				method: 'GET'
 			})
 		}),
@@ -101,43 +89,18 @@ export const apiCaller = createApi({
 				method: 'GET'
 			})
 		}),
-		addTable: builder.mutation<void, { numberOfTable: number }>({
-			query: ({ numberOfTable }) => ({
-				url: `/tables/add?numberOfTables=${numberOfTable}`,
-				method: 'POST'
-			})
-		}),
-		updateTable: builder.mutation<any, any>({
-			query: (body) => ({
-				url: `tables/${body.id}`,
-				method: 'PATCH',
-				body
-			})
-		}),
-		deleteTable: builder.mutation<void, { tablesId: number }>({
-			query: ({ tablesId }) => ({
-				url: `/menus/${tablesId}`,
-				method: 'PATCH'
-			})
-		}),
-		getCategory: builder.query<ICategoryResponse, void>({
-			query: () => ({
-				url: `/categories`,
-				method: 'GET'
-			})
-		}),
-		//
-		getHotMenu: builder.query<IMenuResponse, void>({
-			query: () => ({
-				url: `/menu/all?page=0&limit=5`,
-				method: 'GET'
-			})
-		}),
-		getURLImage: builder.mutation<{ data: string }, FormData>({
-			query: (formData) => ({
-				url: `/menu/getUrlImage`,
+		addTable: builder.mutation({
+			query: (payload) => ({
+				url: '/tables',
 				method: 'POST',
-				body: formData
+				body: payload
+			})
+		}),
+		deleteTable: builder.mutation<void, { tablesId: number; deleted_at: string }>({
+			query: ({ tablesId, deleted_at }) => ({
+				url: `/tables/${tablesId}`,
+				method: 'PATCH',
+				body: { deleted_at }
 			})
 		})
 	})
@@ -149,15 +112,12 @@ export const {
 	useUpdateUsersMutation,
 	useDeleteUsersMutation,
 	useLoginMutation,
-	useSettingUserQuery,
 	useGetMenuQuery,
-	useFilterMenuQuery,
 	useGetTableQuery,
 	useAddTableMutation,
+	useDeleteTableMutation,
 	useDeleteMenuMutation,
 	useAddMenuMutation,
 	useGetCategoryQuery,
-	useUpdateMenuMutation,
-	useGetHotMenuQuery,
-	useGetURLImageMutation
+	useUpdateMenuMutation
 } = apiCaller;

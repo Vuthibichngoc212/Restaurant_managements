@@ -13,7 +13,9 @@ const HeaderTitle = ({ title, customStyles, variant = 'heading2_semibold' }: Pro
 		<Box
 			sx={{
 				'& .MuiTypography-root': {
-					color: theme.palette.primary.royalBlue
+					// color: theme.palette.primary.royalBlue
+					color: theme.palette.primary.espressoBrown
+					// color: theme.palette.primary.freshMint
 				},
 				...customStyles
 			}}
