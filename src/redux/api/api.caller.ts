@@ -1,12 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createApi } from '@reduxjs/toolkit/query/react';
 import customBaseQuery from './fetchBase';
-import { IUserResponse } from '../../types/users';
 import { IMenuResponse, IMenuItem } from '../../types/menu';
 import { IEmployeeResponse } from '../../types/employee';
 import { ITableResponse } from '../../types/table';
 import { ICategoryResponse } from '../../types/category';
-// import { REQUEST_HEADERS } from "../../constants/api.constant";
 export const apiCaller = createApi({
 	reducerPath: 'apiCaller',
 	refetchOnMountOrArgChange: 30,
@@ -63,10 +61,10 @@ export const apiCaller = createApi({
 				body: menuItem
 			})
 		}),
-		deleteMenu: builder.mutation<void, { menuId: number }>({
-			query: ({ menuId }) => ({
+		deleteMenu: builder.mutation({
+			query: (menuId: number) => ({
 				url: `/menus/${menuId}`,
-				method: 'PATCH'
+				method: 'DELETE'
 			})
 		}),
 		updateMenu: builder.mutation({

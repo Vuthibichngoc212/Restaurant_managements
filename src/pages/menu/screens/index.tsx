@@ -10,20 +10,26 @@ import { commonStyles } from '@/styles/common.styles';
 import Add from '@mui/icons-material/Add';
 import { useState } from 'react';
 import DeletePopUp from '@/components/common/DeletePopUp/DeletePopUp';
-import { useGetCategoryQuery, useGetMenuQuery } from '@/redux/api/api.caller';
+import {
+	useDeleteMenuMutation,
+	useGetCategoryQuery,
+	useGetMenuQuery
+} from '@/redux/api/api.caller';
+import { toast } from 'react-toastify';
 
 const Menu = () => {
 	const [isOpenModal, setIsOpenModal] = useState(false);
 	const [isEdit, setIsEdit] = useState<any>(null);
 	const [deleteModal, setDeleteModal] = useState(false);
 
+	const [deleteMenu] = useDeleteMenuMutation();
 	const { data: categories } = useGetCategoryQuery();
 	const categoryMap = categories?.data?.reduce((acc: any, category: any) => {
 		acc[category.id] = category.name;
 		return acc;
 	}, {});
 
-	const { data: menus, isLoading } = useGetMenuQuery();
+	const { data: menus, isLoading, refetch } = useGetMenuQuery();
 	const menuData = menus?.data?.map((menu, index) => ({
 		...menu,
 		stt: index + 1
@@ -44,6 +50,28 @@ const Menu = () => {
 	};
 	const closeDeleteModal = () => {
 		setDeleteModal(false);
+	};
+
+	const handleDeleteConfirm = async () => {
+		if (!isEdit) return;
+		try {
+			if (isEdit) {
+				await deleteMenu(isEdit.id).unwrap();
+				toast.success('Xóa thực đơn thành công', {
+					position: 'bottom-right',
+					autoClose: 1000,
+					theme: 'colored'
+				});
+				refetch();
+			}
+			closeDeleteModal();
+		} catch (error) {
+			toast.error('Xóa thực đơn thất bại', {
+				theme: 'colored',
+				autoClose: 1000,
+				position: 'bottom-right'
+			});
+		}
 	};
 
 	const operationColumns = [
@@ -254,7 +282,7 @@ const Menu = () => {
 					/>
 
 					<DeletePopUp
-						onConfirm={handleDeleteModal}
+						onConfirm={handleDeleteConfirm}
 						open={deleteModal}
 						onClose={closeDeleteModal}
 						title={'Xoá thực đơn'}
