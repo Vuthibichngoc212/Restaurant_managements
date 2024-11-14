@@ -1,15 +1,15 @@
-import useCommonStore from '@/stores/common.stores';
+// import useCommonStore from '@/stores/common.stores';
 import { Box, Stack } from '@mui/material';
 import { Outlet, useNavigate } from 'react-router-dom';
 import Sidebar from '../Sidebar/Sidebar';
-import Footer from '../Footer/Footer';
+// import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import { useEffect } from 'react';
 import Cookies from 'js-cookie';
 
 const ProtectedLayout = () => {
 	const navigate = useNavigate();
-	const { isOpenSidebar } = useCommonStore();
+	// const { isOpenSidebar } = useCommonStore();
 
 	useEffect(() => {
 		const adminCookie = Cookies.get('Admin');
@@ -34,9 +34,9 @@ const ProtectedLayout = () => {
 					<Box py={3} pr={3} overflow={'auto'} height={'calc(100vh - 100px'}>
 						<Outlet />
 					</Box>
-					<Box sx={{ position: 'fixed', left: isOpenSidebar ? '30rem' : '10rem', bottom: '3.2em' }}>
+					{/* <Box sx={{ position: 'fixed', left: isOpenSidebar ? '30rem' : '10rem', bottom: '3.2em' }}>
 						<Footer isOpenSidebar={isOpenSidebar} />
-					</Box>
+					</Box> */}
 				</Box>
 			</Stack>
 		</div>
