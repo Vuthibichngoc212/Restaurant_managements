@@ -11,7 +11,9 @@ export const ROUTE_PATH = {
 		DASHBOARD: '/dashboard',
 		EMPLOYEE: '/employee',
 		MENU: '/menu',
-		TABLE: '/table'
+		TABLE: '/table',
+		ORDER: '/order',
+		PROFILE: '/profile'
 	},
 	NOTFOUND: {
 		INDEX: '*'

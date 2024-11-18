@@ -15,7 +15,7 @@ export const useStyles = makeStyles(() => ({
 		display: 'flex',
 		alignItems: 'center',
 		'& > .MuiBox-root': {
-			backgroundColor: '#FFF1EA',
+			// backgroundColor: '#FFF1EA',
 			width: '6.4rem',
 			height: '6.4rem',
 			display: 'flex',

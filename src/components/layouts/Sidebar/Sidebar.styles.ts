@@ -9,8 +9,9 @@ export const useStyles = makeStyles(() => ({
 			},
 			'& .MuiListItemIcon-root': {
 				minWidth: 0,
-				margin: '0px 14px 0px 10px',
-				color: theme.palette.primary.main
+				margin: '0px 14px 0px 10px'
+				// color: theme.palette.primary.main
+				// color: '#fff !important'
 			}
 		}
 	},

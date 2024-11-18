@@ -72,7 +72,7 @@ const FormModal = ({
 		>
 			<FormProvider {...methods}>
 				<Box sx={{ width: '60rem' }}>
-					<CustomTextField label="Số lượng bàn" name="id" control={methods.control} required />
+					<CustomTextField label="Bàn số" name="id" control={methods.control} required />
 				</Box>
 			</FormProvider>
 		</CRUDModal>

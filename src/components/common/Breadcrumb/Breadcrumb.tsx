@@ -1,14 +1,15 @@
 import { Breadcrumbs, Link as MuiLink, Box, Typography } from '@mui/material';
 import { useLocation, Link } from 'react-router-dom';
 
-type BreadcrumbKeys = 'DASHBOARD' | 'EMPLOYEE' | 'MENU' | 'TABLE' | 'PROFILE';
+type BreadcrumbKeys = 'DASHBOARD' | 'EMPLOYEE' | 'MENU' | 'TABLE' | 'PROFILE' | 'ORDER';
 
 const BREADCRUMB: Record<BreadcrumbKeys, { INDEX: string }> = {
 	DASHBOARD: { INDEX: 'Tổng quan' },
 	EMPLOYEE: { INDEX: 'Quản lý nhân viên' },
 	MENU: { INDEX: 'Quản lý thực đơn' },
 	TABLE: { INDEX: 'Quản lý bàn' },
-	PROFILE: { INDEX: 'Trang cá nhân' }
+	PROFILE: { INDEX: 'Trang cá nhân' },
+	ORDER: { INDEX: 'Quản lý đơn hàng' }
 };
 
 const Breadcrumb = () => {

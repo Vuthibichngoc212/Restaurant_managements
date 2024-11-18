@@ -36,7 +36,6 @@ const CRUDModal = ({
 					<HeaderTitle
 						title={headerTitle}
 						customStyles={{
-							// '& .MuiTypography-root': { color: '#000' },
 							'& .MuiTypography-root': { color: theme.palette.primary.freshMint },
 							textAlign: 'center',
 							marginBottom: '1.6rem',

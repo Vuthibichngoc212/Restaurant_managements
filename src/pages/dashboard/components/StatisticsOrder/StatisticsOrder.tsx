@@ -9,6 +9,7 @@ import {
 	Tooltip,
 	Legend
 } from 'chart.js';
+import theme from '@/themes/theme.d';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
@@ -18,16 +19,19 @@ const data = {
 		{
 			label: 'Đơn hàng tối đa',
 			data: Array(12).fill(200),
-			backgroundColor: 'rgba(255, 99, 132, 0.2)',
+			backgroundColor: 'rgba(206, 178, 150, 0.2)',
+			// backgroundColor: 'rgba(220, 220, 220, 0.5)',
+			// backgroundColor: 'rgba(144, 202, 249, 0.3)',
+			// backgroundColor: '#F6F2ED',
 			borderWidth: 1,
 			barThickness: 20,
-			categoryPercentage: 0.8, // Điều chỉnh độ rộng của nhóm cột
-			barPercentage: 0.8 // Điều chỉnh độ rộng của cột trong nhóm
+			categoryPercentage: 0.8,
+			barPercentage: 0.8
 		},
 		{
 			label: 'Số lượng đơn hàng thực tế',
 			data: [50, 120, 80, 140, 160, 180, 90, 75, 130, 95, 150, 170],
-			backgroundColor: 'rgba(255, 99, 132, 1)',
+			backgroundColor: '#4E8D7C',
 			borderWidth: 1,
 			barThickness: 20,
 			categoryPercentage: 0.8,
@@ -95,7 +99,9 @@ const StatisticsOrder = () => {
 					height: '400px'
 				}}
 			>
-				<Typography variant="title1_bold">Biểu đồ thống kê tổng số lượng đơn hàng</Typography>
+				<Typography variant="title1_bold" sx={{ color: theme.palette.primary.espressoBrown }}>
+					Biểu đồ thống kê tổng số lượng đơn hàng
+				</Typography>
 				<Box sx={{ height: '90%' }}>
 					<Bar data={data} options={options} />
 				</Box>

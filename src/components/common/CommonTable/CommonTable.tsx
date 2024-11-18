@@ -135,19 +135,6 @@ const TableCommon: React.FC<DataTableProps> = ({
 										</TableCell>
 									);
 								})}
-							{/* {options && options.checkList && options.checkList.isShow && (
-								<TableCell
-									sx={{
-										'&.MuiTableCell-root': {
-											textAlign: 'center',
-											minWidth: 70,
-											maxWidth: 70
-										}
-									}}
-								>
-									<Typography variant="body2_semibold">Chọn</Typography>
-								</TableCell>
-							)} */}
 						</TableRow>
 					</TableHead>
 					<TableBody>

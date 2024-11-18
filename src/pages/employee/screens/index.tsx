@@ -76,7 +76,9 @@ const Employees = () => {
 		},
 		{ name: 'name', title: 'Họ tên', align: 'left', width: 150 },
 		{ name: 'email', title: 'Email', align: 'left', width: 230 },
-		{ name: 'password', title: 'Mật khẩu', align: 'left', width: 230 },
+		{ name: 'password', title: 'Mật khẩu', align: 'left', width: 130 },
+		{ name: 'phone', title: 'Số điện thoại', align: 'left', width: 150 },
+		{ name: 'address', title: 'Địa chỉ', align: 'left', width: 200 },
 		{
 			name: 'action',
 			title: 'Thao tác',

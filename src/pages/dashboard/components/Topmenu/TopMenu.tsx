@@ -1,5 +1,6 @@
 import { Avatar, Box, Paper, Typography } from '@mui/material';
 import { useGetMenuQuery } from '@/redux/api/api.caller';
+import theme from '@/themes/theme.d';
 
 const TopMenu = () => {
 	const { data: menus } = useGetMenuQuery();
@@ -15,7 +16,9 @@ const TopMenu = () => {
 					mb: '12px'
 				}}
 			>
-				<Typography variant="title1_bold">Top các món ăn</Typography>
+				<Typography variant="title1_bold" sx={{ color: theme.palette.primary.espressoBrown }}>
+					Top các món ăn
+				</Typography>
 			</Paper>
 			<Box>
 				{menuData?.map((item, index) => (

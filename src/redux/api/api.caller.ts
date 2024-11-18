@@ -100,6 +100,20 @@ export const apiCaller = createApi({
 				method: 'PATCH',
 				body: { deleted_at }
 			})
+		}),
+		//order
+		getOrder: builder.query<any, void>({
+			query: () => ({
+				url: `/employee_handle_order`,
+				method: 'GET'
+			})
+		}),
+		//OrderTotal
+		getOrderTotal: builder.query<any, void>({
+			query: () => ({
+				url: `/orders/total`,
+				method: 'GET'
+			})
 		})
 	})
 });
@@ -117,5 +131,7 @@ export const {
 	useDeleteMenuMutation,
 	useAddMenuMutation,
 	useGetCategoryQuery,
-	useUpdateMenuMutation
+	useUpdateMenuMutation,
+	useGetOrderQuery,
+	useGetOrderTotalQuery
 } = apiCaller;

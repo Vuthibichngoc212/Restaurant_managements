@@ -99,6 +99,7 @@ const Menu = () => {
 				);
 			}
 		},
+		{ name: 'quantity', title: 'Số lượng', align: 'left', width: 80 },
 		{ name: 'name', title: 'Tên món ăn', align: 'left', width: 180 },
 		{ name: 'price', title: 'Giá', align: 'left', width: 100 },
 		{

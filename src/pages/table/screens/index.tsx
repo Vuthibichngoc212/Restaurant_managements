@@ -1,39 +1,58 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import TableCommon from '@/components/common/CommonTable/CommonTable';
-import theme from '@/themes/theme.d';
-import { Box, Button, CircularProgress, IconButton, Tooltip, Typography } from '@mui/material';
-import FormModal from '../components/FormModal/FormModal';
-import HeaderTitle from '@/components/common/HeaderTitle/HeaderTitle';
-import Trash from '@/assets/icons/trash-table.svg?react';
-import { commonStyles } from '@/styles/common.styles';
-import { useGetTableQuery, useDeleteTableMutation } from '@/redux/api/api.caller';
-import Add from '@mui/icons-material/Add';
 import { useState } from 'react';
-import DeletePopUp from '@/components/common/DeletePopUp/DeletePopUp';
+import {
+	Box,
+	Button,
+	CircularProgress,
+	Grid,
+	IconButton,
+	Menu,
+	MenuItem,
+	Typography
+} from '@mui/material';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import Add from '@mui/icons-material/Add';
+import Trash from '@/assets/icons/trash.svg?react';
+import bgTableImage from '@/assets/images/bg-table.jpeg';
+import { useDeleteTableMutation, useGetTableQuery } from '@/redux/api/api.caller';
 import { toast } from 'react-toastify';
+import DeletePopUp from '@/components/common/DeletePopUp/DeletePopUp';
+import FormModal from '../components/FormModal/FormModal';
+import theme from '@/themes/theme.d';
 
 const Table = () => {
 	const [isOpenModal, setIsOpenModal] = useState(false);
 	const [isEdit, setIsEdit] = useState<any>(null);
 	const [deleteModal, setDeleteModal] = useState(false);
+	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+	const [selectedTable, setSelectedTable] = useState<number | null>(null);
+	const open = Boolean(anchorEl);
 
+	const { data: tablesData, refetch, isLoading } = useGetTableQuery();
 	const [deleteTable] = useDeleteTableMutation();
-	const { data: tables, refetch, isLoading } = useGetTableQuery();
-	const tableData = tables?.data?.map((table, index) => ({
-		...table,
-		stt: index + 1
-	}));
+
+	const tableData = tablesData?.data || [];
 
 	const handleClickAdd = () => {
 		setIsOpenModal(true);
 		setIsEdit(null);
 	};
 
+	const handleMenuOpen = (event: React.MouseEvent<HTMLButtonElement>, id: number) => {
+		setAnchorEl(event.currentTarget);
+		setSelectedTable(id);
+	};
+
+	const handleMenuClose = () => {
+		setAnchorEl(null);
+		setSelectedTable(null);
+	};
+
 	const handleDeleteModal = (item: any) => {
 		setIsEdit(item);
 		setDeleteModal(true);
 	};
+
 	const closeDeleteModal = () => {
 		setDeleteModal(false);
 	};
@@ -60,143 +79,135 @@ const Table = () => {
 		}
 	};
 
-	const operationColumns = [
-		{
-			name: 'stt',
-			title: 'STT',
-			align: 'center',
-			width: 50
-		},
-		{
-			name: 'id',
-			title: 'Số bàn',
-			align: 'left',
-			width: 100,
-			render: (row: any) => {
-				return <Typography variant="body2_regular">Bàn số {row.id}</Typography>;
-			}
-		},
-		{
-			name: 'action',
-			title: 'Thao tác',
-			align: 'center',
-			width: 100,
-			render: (row: any) => {
-				return (
-					<Box
-						sx={{
-							display: 'flex',
-							alignItems: 'center',
-							justifyContent: 'center',
-							gap: '1.6rem',
-							'& svg:hover': {
-								cursor: 'pointer',
-								'& path': {
-									fill: theme.palette.primary.main
-								}
-							}
-						}}
-					>
-						<Tooltip
-							title="Xoá bàn"
-							arrow
-							slotProps={{
-								popper: {
-									modifiers: [
-										{
-											name: 'offset',
-											options: {
-												offset: [0, -7]
-											}
-										}
-									]
-								}
-							}}
-						>
-							<IconButton sx={commonStyles.iconButton()} onClick={() => handleDeleteModal(row)}>
-								<Trash />
-							</IconButton>
-						</Tooltip>
-					</Box>
-				);
-			}
-		}
-	];
-
 	return (
-		<Box>
-			<HeaderTitle title="Quản lý bàn" customStyles={{ marginBottom: '24px' }} />
-			{isLoading ? (
-				<Box
-					sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '66vh' }}
-				>
-					<CircularProgress />
-				</Box>
-			) : (
-				<Box
+		<>
+			<Box
+				sx={{
+					position: 'relative',
+					display: 'flex',
+					justifyContent: 'flex-end',
+					mb: '1.6rem'
+				}}
+			>
+				<Button
+					variant="contained"
+					size="medium"
 					sx={{
-						height: '70vh',
-						position: 'relative',
-						background: theme.palette.background.paper,
-						borderRadius: '8px',
-						boxShadow: ' 0px 1px 5px 0px #0000000D',
-						padding: '2.4rem'
+						'&.MuiButtonBase-root.MuiButton-root': { height: '4.6rem' }
 					}}
+					startIcon={<Add />}
+					onClick={handleClickAdd}
 				>
+					Thêm bàn
+				</Button>
+			</Box>
+			<Grid container spacing={3}>
+				{isLoading ? (
 					<Box
-						sx={{
-							position: 'relative',
-							display: 'flex',
-							justifyContent: 'flex-end',
-							mb: '1.6rem'
-						}}
+						sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '66vh' }}
 					>
-						<Button
-							variant="contained"
-							size="medium"
-							sx={{
-								'&.MuiButtonBase-root.MuiButton-root': { height: '4.6rem' }
-							}}
-							startIcon={<Add />}
-							onClick={handleClickAdd}
-						>
-							Thêm bàn
-						</Button>
+						<CircularProgress />
 					</Box>
-					<TableCommon
-						data={tableData || []}
-						columns={operationColumns}
-						customTableStyles={{
-							height: '90%'
-						}}
-					/>
+				) : (
+					tableData.map((table: any) => (
+						<Grid item xs={12} sm={6} md={4} lg={2.4} key={table.id}>
+							<Box
+								sx={{
+									borderRadius: 3,
+									overflow: 'hidden',
+									boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
+									textAlign: 'center',
+									position: 'relative',
+									display: 'flex',
+									flexDirection: 'column',
+									cursor: 'pointer'
+								}}
+							>
+								<Box
+									component="img"
+									src={bgTableImage}
+									alt={`Bàn ${table.id}`}
+									sx={{
+										width: '100%',
+										height: 150,
+										backgroundColor: '#f0f0f0'
+									}}
+								/>
+								<IconButton
+									onClick={(event) => handleMenuOpen(event, table.id)}
+									sx={{
+										position: 'absolute',
+										top: 10,
+										right: 10,
+										color: '#DADADD',
+										backgroundColor: 'rgba(128, 128, 128, 0.8)',
+										'&:hover': {
+											backgroundColor: 'rgba(105, 105, 105, 0.9)'
+										}
+									}}
+								>
+									<MoreVertIcon />
+								</IconButton>
 
-					<FormModal
-						isOpenModal={isOpenModal}
-						setIsOpenModal={setIsOpenModal}
-						headerTitle="Thêm số lượng bàn"
-						cancelButtonLabel="Huỷ bỏ"
-						submitButtonLabel="Lưu"
-					/>
+								<Menu
+									anchorEl={anchorEl}
+									open={open && selectedTable === table.id}
+									onClose={handleMenuClose}
+									anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+									transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+								>
+									<MenuItem
+										onClick={() => handleDeleteModal(table)}
+										sx={{ color: 'red', fontWeight: 'bold' }}
+									>
+										<Trash style={{ marginRight: '5px' }} />
+										<Typography variant="body2_medium" color="red">
+											Xoá
+										</Typography>
+									</MenuItem>
+								</Menu>
 
-					<DeletePopUp
-						onConfirm={handleDeleteConfirm}
-						open={deleteModal}
-						onClose={closeDeleteModal}
-						title={'Xoá thực đơn'}
-						content={
-							<Typography sx={{ color: theme.palette.neutral.black, fontSize: '1.6rem' }}>
-								Bạn có chắc chắn muốn xoá bàn {''}
-								<Typography variant="body1_regular" component="span" sx={{ color: '#000' }}>
-									{isEdit?.íd} {''}
-								</Typography>
-								không?
-							</Typography>
-						}
-					/>
-				</Box>
-			)}
-		</Box>
+								<Box
+									sx={{
+										backgroundColor: '#D5BBA2',
+										padding: '10px 0',
+										color: '#fff',
+										fontWeight: 'bold',
+										fontSize: '16px',
+										marginTop: 0
+									}}
+								>
+									Bàn {table.id}
+								</Box>
+							</Box>
+						</Grid>
+					))
+				)}
+			</Grid>
+			<FormModal
+				isOpenModal={isOpenModal}
+				setIsOpenModal={setIsOpenModal}
+				headerTitle="Thêm bàn"
+				cancelButtonLabel="Huỷ bỏ"
+				submitButtonLabel="Lưu"
+			/>
+
+			<DeletePopUp
+				onConfirm={handleDeleteConfirm}
+				open={deleteModal}
+				onClose={closeDeleteModal}
+				title={'Xoá bàn'}
+				content={
+					<Typography sx={{ color: theme.palette.neutral.black, fontSize: '1.6rem' }}>
+						Bạn có chắc chắn muốn xoá bàn {''}
+						<Typography variant="body1_regular" component="span" sx={{ color: '#000' }}>
+							{isEdit?.id} {''}
+						</Typography>
+						không?
+					</Typography>
+				}
+			/>
+		</>
 	);
 };
 

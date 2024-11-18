@@ -134,7 +134,20 @@ const FormModal = ({
 							control={methods.control}
 							options={categoryOptions}
 						/>
-						<CustomTextField label="Mô tả" name="discription" control={methods.control} required />
+						{/* <CustomTextField label="Mô tả" name="discription" control={methods.control} required /> */}
+						<CustomTextField
+							label="Mô tả"
+							name="discription"
+							control={methods.control}
+							required
+							inputProps={{
+								style: {
+									whiteSpace: 'nowrap',
+									overflow: 'hidden',
+									textOverflow: 'ellipsis'
+								}
+							}}
+						/>
 					</Box>
 				</Box>
 			</FormProvider>

@@ -1,7 +1,7 @@
 import { Box, Card, CardContent, Grid, Typography } from '@mui/material';
-import DevicesIcon from '@mui/icons-material/Devices';
-import GroupIcon from '@mui/icons-material/Group';
+import totalOrderIcon from '@/assets/icons/totalOrder-icon.png';
 import accountIcon from '@/assets/icons/accountCard.png';
+import totalRevenueIcon from '@/assets/icons/totalRevenueIcon.png';
 import { useStyles } from './Dashboard.styles';
 import StatisticsOrder from '../components/StatisticsOrder/StatisticsOrder';
 import StatisticsRevenue from '../components/StatisticsRevenue/StatisticsRevenue';
@@ -14,8 +14,19 @@ const Dashboard = () => {
 		{
 			title: 'Tổng doanh thu trong ngày',
 			count: 15,
-			icon: <DevicesIcon sx={{ color: '#0000ff' }} />,
-			backgroundColor: '#E0E7FF'
+			icon: (
+				<Box
+					component="img"
+					src={totalRevenueIcon}
+					alt="account icon"
+					sx={{
+						width: '36px',
+						height: '36px',
+						borderRadius: '50%'
+					}}
+				/>
+			),
+			backgroundColor: '#4E8D7C'
 		},
 		{
 			title: 'Tổng số lượng nhân viên',
@@ -32,13 +43,24 @@ const Dashboard = () => {
 					}}
 				/>
 			),
-			backgroundColor: '#E6F4EA'
+			backgroundColor: '#FFF1EA'
 		},
 		{
 			title: 'Tổng số đơn hàng trong ngày',
 			count: 12,
-			icon: <GroupIcon sx={{ color: '#ff0000' }} />,
-			backgroundColor: '#FFEAEA'
+			icon: (
+				<Box
+					component="img"
+					src={totalOrderIcon}
+					alt="account icon"
+					sx={{
+						width: '36px',
+						height: '36px',
+						borderRadius: '50%'
+					}}
+				/>
+			),
+			backgroundColor: '#8C6A4F'
 		}
 	];
 
@@ -71,22 +93,16 @@ const Dashboard = () => {
 					</Grid>
 				))}
 			</Grid>
-			{/* <Box>
-				<Grid container spacing={2}>
-					<Grid item md={7}>
-						<StatisticsOrder />
-					</Grid>
-				</Grid>
-			</Box> */}
-			<Box mt={3}>
+
+			<Box mt={4}>
 				<Grid container spacing={2}>
 					<Grid item md={4.5}>
 						<StatisticsRevenue />
 					</Grid>
-					<Grid item md={4.5}>
+					<Grid item md={5}>
 						<StatisticsOrder />
 					</Grid>
-					<Grid item md={3}>
+					<Grid item md={2.5}>
 						<TopMenu />
 					</Grid>
 				</Grid>

@@ -1,3 +1,4 @@
+import theme from '@/themes/theme.d';
 import { Box, Card, Typography } from '@mui/material';
 import {
 	LineChart,
@@ -27,7 +28,7 @@ const revenueData = [
 
 const StatisticsRevenue = () => {
 	return (
-		<Card sx={{ padding: '3.2rem 2.4rem', height: '51.7rem' }}>
+		<Card sx={{ padding: '3.2rem 2.4rem', height: '40rem' }}>
 			<Box
 				sx={{
 					mb: '3.2rem',
@@ -36,7 +37,9 @@ const StatisticsRevenue = () => {
 					alignItems: 'center'
 				}}
 			>
-				<Typography variant="title1_bold">Biểu đồ thống kê doanh thu</Typography>
+				<Typography variant="title1_bold" sx={{ color: theme.palette.primary.espressoBrown }}>
+					Biểu đồ thống kê doanh thu
+				</Typography>
 			</Box>
 			<ResponsiveContainer width="100%" height="85%">
 				<LineChart data={revenueData} margin={{ top: 5, right: 20, left: 10, bottom: 5 }}>
@@ -48,7 +51,7 @@ const StatisticsRevenue = () => {
 					<YAxis label={{ value: 'Doanh thu (VND)', angle: -90, position: 'insideLeft' }} />
 					<Tooltip formatter={(value) => `${value} VND`} />
 					<Legend formatter={() => 'Doanh thu'} />
-					<Line type="monotone" dataKey="doanhThu" stroke="#8884d8" activeDot={{ r: 8 }} />
+					<Line type="monotone" dataKey="doanhThu" stroke="#3C7266" activeDot={{ r: 8 }} />
 				</LineChart>
 			</ResponsiveContainer>
 		</Card>

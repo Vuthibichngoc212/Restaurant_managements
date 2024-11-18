@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Logo from '@/assets/icons/logoRes.png';
 import theme from '@/themes/theme.d';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import MuiDrawer from '@mui/material/Drawer';
@@ -61,17 +59,7 @@ const SideBar = () => {
 	const location = useLocation();
 	const classes = useStyles();
 	const { sidebar, navigate } = useRouter();
-	const { isOpenSidebar, setIsOpenSidebar, expanded, setExpanded } = useCommonStore();
-
-	const handleItemClick = (itemPath: any) => {
-		navigate(itemPath);
-	};
-
-	const isChildActive = (primaryLevelItem: any) => {
-		return primaryLevelItem.children?.some((child: any) =>
-			location.pathname.startsWith(child.path)
-		);
-	};
+	const { isOpenSidebar, setIsOpenSidebar, setExpanded } = useCommonStore();
 
 	const filterSidebarRoutes = (routes: any) => {
 		if (!routes) return [];
@@ -94,13 +82,6 @@ const SideBar = () => {
 				}
 			})
 			.filter((route: null) => route !== null);
-	};
-
-	const handleExpansion = (label: any) => (_: any, isExpanded: any) => {
-		setExpanded({
-			...expanded,
-			[label]: isExpanded
-		});
 	};
 
 	useEffect(() => {
@@ -165,223 +146,69 @@ const SideBar = () => {
 						?.map((primaryLevelItem: any) => {
 							return (
 								<Box key={primaryLevelItem.label}>
-									{primaryLevelItem.children && primaryLevelItem.children.length > 0 ? (
-										<Accordion
-											expanded={expanded[primaryLevelItem.label]}
-											onChange={handleExpansion(primaryLevelItem.label)}
-											sx={{
-												'&.MuiAccordion-root': {
-													boxShadow: 'none',
-													background: 'none',
-													'& .MuiAccordionSummary-root': {
-														minHeight: '0',
-														padding: '0.8rem 0.8rem 0.8rem 1.1rem',
-														'&:hover': {
-															backgroundColor: 'rgba(0, 0, 0, 0.04)',
-															borderRadius: '40px'
-														},
+									<ListItem
+										disablePadding
+										sx={
+											location.pathname === primaryLevelItem.path
+												? {
+														// backgroundColor: theme.palette.neutral.main,
+														backgroundColor: '#D5BBA2',
+														// color: theme.palette.neutral.deepCharcoal,
+														color: '#fff',
+														border: '1px solid #A67C52',
 														borderRadius: '40px',
-														backgroundColor: primaryLevelItem.children.some((child: any) =>
-															location.pathname.startsWith(child.path)
-														)
-															? theme.palette.neutral.main
-															: '',
-														'& .MuiAccordionSummary-content': {
-															margin: 0
-														},
-														'& .MuiAccordionSummary-expandIconWrapper': {
-															display: isOpenSidebar ? 'block' : 'none'
-														}
-													},
-													'& .MuiButtonBase-root.MuiAccordionSummary-root.Mui-expanded': {
-														minHeight: '4.8rem'
-													},
-													'& .MuiAccordionSummary-content.Mui-expanded': {
-														margin: 0
-													},
-													...{
-														'& path': {
-															fill: theme.palette.neutral.slateGray
+														'& .MuiButtonBase-root': {
+															'& .MuiListItemIcon-root': {
+																// color: theme.palette.neutral.deepCharcoal
+																color: '#fff'
+															},
+															'& .MuiListItemText-root': {
+																'& .MuiTypography-root': {
+																	// color: theme.palette.neutral.deepCharcoal,
+																	color: '#fff',
+																	fontWeight: 600
+																}
+															}
 														}
 													}
-												}
-											}}
-										>
-											<AccordionSummary
-												expandIcon={<ExpandMoreIcon />}
-												aria-controls="panel1-content"
-												id="panel1-header"
-												onClick={() => handleItemClick(primaryLevelItem.path)}
-												sx={{
-													'&.MuiAccordionSummary-root': {
-														padding: 0
-													}
-												}}
-											>
-												<Box
-													sx={{
-														display: 'flex',
-														width: '100%',
-														alignItems: 'center',
-														justifyContent: 'center',
-														gap: '1.4rem'
-													}}
-												>
-													<Box
-														sx={{
-															position: 'relative',
-															right: !isOpenSidebar ? '0.4rem' : 0,
-															top: '0.2rem'
-														}}
-													>
-														<primaryLevelItem.icon />
-													</Box>
+												: {}
+										}
+										onClick={() => {
+											navigate(primaryLevelItem.path);
+											setIsOpenSidebar(true);
+										}}
+									>
+										<ListItemButton
+											className={classes.listItemRoot}
+											sx={{
+												paddingLeft: isOpenSidebar ? '0px' : '10px',
 
-													<ListItemText
-														className={classes.itemTextRoot}
-														sx={{
-															display: isOpenSidebar ? 'block' : 'none',
-															'& .MuiTypography-root': {
-																color:
-																	(location.pathname.startsWith(primaryLevelItem.path) &&
-																		!isChildActive(primaryLevelItem)) ||
-																	isChildActive(primaryLevelItem)
-																		? theme.palette.neutral.deepCharcoal
-																		: theme.palette.neutral.slateGray,
-																fontWeight: location.pathname.startsWith(primaryLevelItem.path)
-																	? 600
-																	: 500
-															}
-														}}
-														primary={primaryLevelItem.label}
-													/>
-												</Box>
-											</AccordionSummary>
-											<AccordionDetails sx={{ '&.MuiAccordionDetails-root': { padding: 0 } }}>
-												<Box display={'flex'} height={'100%'} paddingLeft={2.5} gap={1}>
-													<Box width={'100%'}>
-														{primaryLevelItem.children.map((secondaryLevelItem: any) => {
-															return (
-																<Box key={secondaryLevelItem.label}>
-																	<ListItem
-																		onClick={() => {
-																			navigate(secondaryLevelItem.path);
-																			setIsOpenSidebar(true);
-																		}}
-																		disablePadding
-																		sx={{
-																			display: 'block',
-																			borderRadius: '40px',
-																			textAlign: 'center',
-																			':hover': {
-																				backgroundColor: theme.palette.neutral.main
-																			},
-																			'& .MuiListItemText-root': {
-																				'& .MuiTypography-root': {
-																					color: location.pathname.startsWith(
-																						secondaryLevelItem.path
-																					)
-																						? theme.palette.neutral.deepCharcoal
-																						: theme.palette.neutral.slateGray,
-																					fontWeight: location.pathname.startsWith(
-																						secondaryLevelItem.path
-																					)
-																						? 500
-																						: 400
-																				}
-																			},
-																			'&::after': {
-																				content: '""',
-																				position: 'absolute',
-																				top: 14,
-																				left: 19,
-																				width: '0.2rem',
-																				height: '1.8rem',
-																				borderRadius: '40px'
-																			},
-																			'& .MuiButtonBase-root.MuiListItemButton-root:hover': {
-																				backgroundColor: 'transparent'
-																			}
-																		}}
-																	>
-																		<ListItemButton
-																			sx={{
-																				padding: 1,
-																				paddingLeft: 2
-																			}}
-																		>
-																			<Box>
-																				<ListItemText
-																					className={classes.itemTextRoot}
-																					sx={{ textAlign: 'center' }}
-																					primary={secondaryLevelItem.label}
-																				/>
-																			</Box>
-																		</ListItemButton>
-																	</ListItem>
-																</Box>
-															);
-														})}
-													</Box>
-												</Box>
-											</AccordionDetails>
-										</Accordion>
-									) : (
-										<ListItem
-											disablePadding
-											sx={
-												location.pathname === primaryLevelItem.path
+												...(location.pathname === primaryLevelItem.path
 													? {
-															backgroundColor: theme.palette.neutral.main,
-															color: theme.palette.neutral.deepCharcoal,
-															borderRadius: '40px',
-															'& .MuiButtonBase-root': {
-																'& .MuiListItemIcon-root': {
-																	color: theme.palette.neutral.deepCharcoal
-																},
-																'& .MuiListItemText-root': {
-																	'& .MuiTypography-root': {
-																		color: theme.palette.neutral.deepCharcoal,
-																		fontWeight: 600
-																	}
-																}
+															'& path': {
+																// fill: theme.palette.neutral.deepCharcoal
+																// fill: '#4B2C20'
+																fill: '#F6F2ED'
+																// fill: '#A67C52'
 															}
 														}
-													: {}
-											}
-											onClick={() => {
-												navigate(primaryLevelItem.path);
-												setIsOpenSidebar(true);
+													: {
+															'& path': {
+																fill: theme.palette.neutral.slateGray
+															}
+														})
 											}}
 										>
-											<ListItemButton
-												className={classes.listItemRoot}
-												sx={{
-													paddingLeft: isOpenSidebar ? '0px' : '10px',
-													...(location.pathname === primaryLevelItem.path
-														? {
-																'& path': {
-																	fill: theme.palette.neutral.deepCharcoal
-																}
-															}
-														: {
-																'& path': {
-																	fill: theme.palette.neutral.slateGray
-																}
-															})
-												}}
-											>
-												<ListItemIcon>
-													<primaryLevelItem.icon />
-												</ListItemIcon>
-												<ListItemText
-													className={classes.itemTextRoot}
-													primary={primaryLevelItem.label}
-													sx={{ opacity: isOpenSidebar ? 1 : 0 }}
-												/>
-											</ListItemButton>
-										</ListItem>
-									)}
+											<ListItemIcon>
+												<primaryLevelItem.icon />
+											</ListItemIcon>
+											<ListItemText
+												className={classes.itemTextRoot}
+												primary={primaryLevelItem.label}
+												sx={{ opacity: isOpenSidebar ? 1 : 0 }}
+											/>
+										</ListItemButton>
+									</ListItem>
 								</Box>
 							);
 						})}
