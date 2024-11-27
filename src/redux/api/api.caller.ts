@@ -23,7 +23,7 @@ export const apiCaller = createApi({
 		}),
 		getUsers: builder.query<IEmployeeResponse, void>({
 			query: () => ({
-				url: `/users`,
+				url: `/users?page=1&limit=50`,
 				method: 'GET'
 			})
 		}),
@@ -50,7 +50,7 @@ export const apiCaller = createApi({
 		//menu
 		getMenu: builder.query<IMenuResponse, void>({
 			query: () => ({
-				url: `/menus`,
+				url: `/menus?page=1&limit=50`,
 				method: 'GET'
 			})
 		}),
@@ -104,7 +104,7 @@ export const apiCaller = createApi({
 		//order
 		getOrder: builder.query<any, void>({
 			query: () => ({
-				url: `/employee_handle_order`,
+				url: `/employee_handle_order?page=1&limit=50`,
 				method: 'GET'
 			})
 		}),

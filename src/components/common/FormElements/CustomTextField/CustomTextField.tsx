@@ -26,7 +26,7 @@ const CustomTextField = <TFieldValues extends FieldValues>({
 				required: required ? `${label} bắt buộc nhập` : false
 			}}
 			render={({ field: { onChange, value }, fieldState: { error } }) => (
-				<Box>
+				<Box sx={{ mb: '12px' }}>
 					{label && (
 						<InputLabel>
 							{label}{' '}

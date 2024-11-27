@@ -1,4 +1,4 @@
-import { Box, Card, CardContent, Grid, Typography } from '@mui/material';
+import { Box, Card, CardContent, CircularProgress, Grid, Typography } from '@mui/material';
 import totalOrderIcon from '@/assets/icons/totalOrder-icon.png';
 import accountIcon from '@/assets/icons/accountCard.png';
 import totalRevenueIcon from '@/assets/icons/totalRevenueIcon.png';
@@ -6,14 +6,27 @@ import { useStyles } from './Dashboard.styles';
 import StatisticsOrder from '../components/StatisticsOrder/StatisticsOrder';
 import StatisticsRevenue from '../components/StatisticsRevenue/StatisticsRevenue';
 import TopMenu from '../components/Topmenu/TopMenu';
+import { useGetOrderTotalQuery, useGetUsersQuery } from '@/redux/api/api.caller';
 
 const Dashboard = () => {
 	const classes = useStyles();
 
+	const { data: totals } = useGetOrderTotalQuery();
+	const { data: employees } = useGetUsersQuery();
+	const totalEmployees = employees?.data.length;
+
+	if (!totals) {
+		return (
+			<Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '66vh' }}>
+				<CircularProgress />
+			</Box>
+		);
+	}
+
 	const data = [
 		{
 			title: 'Tổng doanh thu trong ngày',
-			count: 15,
+			count: totals.totalRevenueByDay,
 			icon: (
 				<Box
 					component="img"
@@ -30,7 +43,7 @@ const Dashboard = () => {
 		},
 		{
 			title: 'Tổng số lượng nhân viên',
-			count: 8,
+			count: totalEmployees,
 			icon: (
 				<Box
 					component="img"
@@ -47,7 +60,7 @@ const Dashboard = () => {
 		},
 		{
 			title: 'Tổng số đơn hàng trong ngày',
-			count: 12,
+			count: totals.totalOrderByDay,
 			icon: (
 				<Box
 					component="img"

@@ -80,7 +80,7 @@ const Menu = () => {
 			name: 'image_url',
 			title: 'Hình ảnh',
 			align: 'center',
-			width: 100,
+			width: '15%',
 			render: (row: any) => {
 				return (
 					<Box
@@ -90,7 +90,6 @@ const Menu = () => {
 						sx={{
 							width: '130px',
 							height: '84px',
-							mr: 2,
 							objectFit: 'cover',
 							borderRadius: '16px',
 							border: '1px solid #E0E0E0'
@@ -99,14 +98,14 @@ const Menu = () => {
 				);
 			}
 		},
-		{ name: 'quantity', title: 'Số lượng', align: 'left', width: 80 },
-		{ name: 'name', title: 'Tên món ăn', align: 'left', width: 180 },
-		{ name: 'price', title: 'Giá', align: 'left', width: 100 },
+		{ name: 'quantity', title: 'Số lượng', align: 'left', width: 120 },
+		{ name: 'name', title: 'Tên món ăn', align: 'left', width: '20%' },
+		{ name: 'price', title: 'Giá', align: 'left', width: '10%' },
 		{
 			name: 'categories_id',
 			title: 'Phân loại',
 			align: 'left',
-			width: 100,
+			width: 150,
 			render: (row: any) => {
 				return (
 					<Typography variant="body2_regular">
@@ -119,7 +118,7 @@ const Menu = () => {
 			name: 'discription',
 			title: 'Mô tả',
 			align: 'left',
-			width: 150,
+			width: 200,
 			render: (row: any) => {
 				return (
 					<Tooltip
@@ -269,7 +268,9 @@ const Menu = () => {
 						data={menuData || []}
 						columns={operationColumns}
 						customTableStyles={{
-							height: '90%'
+							height: '90%',
+							overflowX: 'auto',
+							width: '100%'
 						}}
 					/>
 

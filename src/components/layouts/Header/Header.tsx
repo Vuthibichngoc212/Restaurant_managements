@@ -17,6 +17,7 @@ import useStyles from './Header.styles';
 import useRouter from '@/routes/routerHook';
 import Breadcrumb from '@/components/common/Breadcrumb/Breadcrumb';
 import theme from '@/themes/theme.d';
+import Cookies from 'js-cookie';
 
 const settings = [
 	{ label: 'Trang cá nhân', icon: <PeopleAltOutlinedIcon />, path: '/profile' },
@@ -35,6 +36,11 @@ const Header = () => {
 
 	const handleCloseUserMenu = () => {
 		setAnchorElUser(null);
+	};
+
+	const handleLogout = () => {
+		Cookies.remove('Admin');
+		navigate('/');
 	};
 
 	return (
@@ -99,7 +105,9 @@ const Header = () => {
 								<MenuItem
 									key={setting.label}
 									onClick={() => {
-										if (setting.path === '/profile') {
+										if (setting.label === 'Đăng xuất') {
+											handleLogout();
+										} else if (setting.path === '/profile') {
 											navigate('/profile');
 										}
 										handleCloseUserMenu();

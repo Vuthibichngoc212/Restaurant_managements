@@ -9,8 +9,7 @@ import { loginSchema } from '@/schema/auth';
 import CustomTextField from '@/components/common/FormElements/CustomTextField/CustomTextField';
 import PasswordTextField from '@/components/common/FormElements/PasswordTextField';
 import { useDispatch } from 'react-redux';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
 import { useLoginMutation } from '@/redux/api/api.caller';
 import { setUser } from '@/redux/features/dashboard.slice';
 import Cookies from 'js-cookie';
@@ -18,7 +17,7 @@ import Cookies from 'js-cookie';
 const SignIn = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const { control, handleSubmit } = useForm({
+	const { control, handleSubmit, reset } = useForm({
 		defaultValues: {
 			email: '',
 			password: ''
@@ -34,33 +33,21 @@ const SignIn = () => {
 			if (response.data && response.data.role_type === 1) {
 				dispatch(setUser(response));
 				Cookies.set('Admin', JSON.stringify(response), { expires: 7 });
-				toast.success('Đăng nhập thành công', {
-					position: 'bottom-right',
-					autoClose: 2000,
-					theme: 'colored'
-				});
+				toast.success('Đăng nhập thành công');
 				setTimeout(() => {
 					navigate('/dashboard');
-				}, 2000);
+				}, 1000);
 			} else {
-				toast.error('Bạn không có quyền truy cập vào trang Admin', {
-					theme: 'colored',
-					autoClose: 2000,
-					position: 'bottom-right'
-				});
+				toast.error('Bạn không có quyền truy cập vào trang Admin');
+				reset();
 			}
 		} catch (error) {
-			toast.error('Đăng nhập thất bại. Sai email hoặc mật khẩu', {
-				theme: 'colored',
-				autoClose: 2000,
-				position: 'bottom-right'
-			});
+			toast.error('Đăng nhập thất bại. Sai email hoặc mật khẩu');
 		}
 	};
 
 	return (
 		<>
-			<ToastContainer />
 			<Box
 				sx={{
 					display: 'flex',

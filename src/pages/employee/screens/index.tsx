@@ -12,7 +12,6 @@ import { useDeleteUsersMutation, useGetUsersQuery } from '@/redux/api/api.caller
 import FormModal from '../components/FormModal/FormModal';
 import DeletePopUp from '@/components/common/DeletePopUp/DeletePopUp';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const Employees = () => {
 	const [isOpenModal, setIsOpenModal] = useState(false);
@@ -50,20 +49,12 @@ const Employees = () => {
 		try {
 			if (selectedUser) {
 				await deleteUsers(selectedUser.id).unwrap();
-				toast.success('Xóa nhân viên thành công', {
-					position: 'bottom-right',
-					autoClose: 1000,
-					theme: 'colored'
-				});
+				toast.success('Xóa nhân viên thành công');
 				refetch();
 			}
 			closeDeleteModal();
 		} catch (error) {
-			toast.error('Xóa nhân viên thất bại', {
-				theme: 'colored',
-				autoClose: 1000,
-				position: 'bottom-right'
-			});
+			toast.error('Xóa nhân viên thất bại');
 		}
 	};
 

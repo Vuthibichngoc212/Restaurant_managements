@@ -3,10 +3,10 @@ import CRUDModal from '@/components/common/CRUDModal/CRUDModal';
 import CustomTextField from '@/components/common/FormElements/CustomTextField/CustomTextField';
 import { menuSchema } from '@/schema/menu';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+// import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import {
 	useAddMenuMutation,
 	useGetCategoryQuery,
@@ -16,7 +16,6 @@ import {
 import CustomAutocomplete from '@/components/common/FormElements/CustomAutoComplete';
 import { IMenuItem } from '@/types/menu';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const FormModal = ({
 	isOpenModal,
@@ -56,22 +55,13 @@ const FormModal = ({
 			if (selectedUser) {
 				const response = await updateMenu({ id: selectedUser.id, ...payload }).unwrap();
 				if (response) {
-					console.log('Menu updated successfully:', response);
-					toast.success('Chỉnh sửa thực đơn thành công', {
-						position: 'bottom-right',
-						autoClose: 1000,
-						theme: 'colored'
-					});
+					toast.success('Chỉnh sửa thực đơn thành công');
 					refetch();
 				}
 			} else {
 				await addMenu(payload).unwrap();
 				console.log('Menu added successfully');
-				toast.success('Thêm thực đơn thành công', {
-					position: 'bottom-right',
-					autoClose: 1000,
-					theme: 'colored'
-				});
+				toast.success('Thêm thực đơn thành công');
 				refetch();
 			}
 
@@ -79,11 +69,7 @@ const FormModal = ({
 			methods.reset();
 		} catch (error) {
 			console.error('Error submitting menu:', error);
-			toast.error('Lỗi khi xử lý', {
-				position: 'bottom-right',
-				autoClose: 1000,
-				theme: 'colored'
-			});
+			toast.error('Lỗi khi xử lý');
 		}
 	};
 
