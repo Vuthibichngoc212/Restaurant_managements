@@ -63,19 +63,11 @@ const Table = () => {
 		try {
 			const deletedAt = new Date().toISOString();
 			await deleteTable({ tablesId: isEdit.id, deleted_at: deletedAt }).unwrap();
-			toast.success('Xóa bàn thành công', {
-				position: 'bottom-right',
-				autoClose: 1000,
-				theme: 'colored'
-			});
+			toast.success('Xóa bàn thành công');
 			refetch();
 			closeDeleteModal();
 		} catch (error) {
-			toast.error('Xóa bàn thất bại', {
-				theme: 'colored',
-				autoClose: 1000,
-				position: 'bottom-right'
-			});
+			toast.error('Xóa bàn thất bại');
 		}
 	};
 

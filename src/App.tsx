@@ -10,8 +10,14 @@ function App() {
 	return (
 		<ThemeProvider theme={customTheme}>
 			<AppRoute />
+			<ToastContainer
+				className="custom-toast-container"
+				draggable
+				closeOnClick
+				autoClose={500}
+				position="top-right"
+			/>
 			<CssBaseline />
-			<ToastContainer position="bottom-right" autoClose={1000} theme="colored" />
 		</ThemeProvider>
 	);
 }

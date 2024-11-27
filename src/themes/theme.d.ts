@@ -723,7 +723,6 @@ const submitButtonStyle = {
 const textButtonStyle = {
 	color: '#C6C6C6',
 	padding: '0.8rem 1.6rem',
-	fontFamily: 'Inter-bold',
 	height: '4.6rem',
 	borderRadius: '8px',
 	'&:hover': {

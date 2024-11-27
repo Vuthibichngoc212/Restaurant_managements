@@ -16,7 +16,8 @@ const routes: RouteObject[] = [
 		element: <SignIn />
 	},
 	{
-		path: ROUTE_PATH.ADMIN.DASHBOARD,
+		// path: ROUTE_PATH.ADMIN.DASHBOARD,
+		path: ROUTE_PATH.ROOT.INDEX,
 		element: <ProtectedLayout />,
 		children: [
 			{

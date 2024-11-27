@@ -151,21 +151,17 @@ const SideBar = () => {
 										sx={
 											location.pathname === primaryLevelItem.path
 												? {
-														// backgroundColor: theme.palette.neutral.main,
 														backgroundColor: '#D5BBA2',
-														// color: theme.palette.neutral.deepCharcoal,
-														color: '#fff',
+														color: '#ffffff',
 														border: '1px solid #A67C52',
 														borderRadius: '40px',
 														'& .MuiButtonBase-root': {
 															'& .MuiListItemIcon-root': {
-																// color: theme.palette.neutral.deepCharcoal
-																color: '#fff'
+																color: '#ffffff'
 															},
 															'& .MuiListItemText-root': {
 																'& .MuiTypography-root': {
-																	// color: theme.palette.neutral.deepCharcoal,
-																	color: '#fff',
+																	color: '#ffffff',
 																	fontWeight: 600
 																}
 															}
@@ -186,10 +182,7 @@ const SideBar = () => {
 												...(location.pathname === primaryLevelItem.path
 													? {
 															'& path': {
-																// fill: theme.palette.neutral.deepCharcoal
-																// fill: '#4B2C20'
 																fill: '#F6F2ED'
-																// fill: '#A67C52'
 															}
 														}
 													: {
